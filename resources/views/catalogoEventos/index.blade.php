@@ -6,7 +6,7 @@
         <!-- Portfolio Section-->
         <section class="page-section portfolio" id="portfolio">
             <div class="container">
-                @include('components.flash_alerts')
+                @include('layouts.partials.messages')
                 <!-- Portfolio Section Heading-->
                 <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Eventos</h2>
                 <!-- Icon Divider-->
@@ -15,6 +15,7 @@
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
+                {{ $eventos->links() }}
                 <!-- Portfolio Grid Items-->
                 <div class="row justify-content-center">
                     <!-- Portfolio Item 1-->
@@ -36,6 +37,7 @@
                         </div>
                     @endforeach
                 </div>
+                {{ $eventos->links() }}
             </div>
         </section>
         <!-- Portfolio Modals-->

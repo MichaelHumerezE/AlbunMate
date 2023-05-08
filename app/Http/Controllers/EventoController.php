@@ -8,12 +8,27 @@ use App\Http\Requests\UpdateEventoRequest;
 use App\Models\FotografoEvento;
 use App\Models\TipoEvento;
 use App\Models\User;
+use Aws\Rekognition\RekognitionClient;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class EventoController extends Controller
 {
+    protected $rekognition;
+
+    public function __construct()
+    {
+        $this->rekognition = new RekognitionClient([
+            'version' => 'latest',
+            'region' => env('AWS_DEFAULT_REGION'),
+            'credentials' => [
+                'key' => env('AWS_ACCESS_KEY_ID'),
+                'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            ],
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -63,6 +78,9 @@ class EventoController extends Controller
             $path = $request->file('image')->store('eventos/' . $request->carpeta, 's3');
             $evento->image = $path;
             $evento->save();
+            $this->rekognition->createCollection([
+                'CollectionId' => $evento->carpeta,
+            ]);
         }
         return redirect()->route('eventos.index')->with('message', 'Evento Agregado Con Éxito');
     }

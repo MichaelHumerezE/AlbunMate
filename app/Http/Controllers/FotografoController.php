@@ -5,19 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Database\QueryException;
-use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 
-class ClienteController extends Controller
+class FotografoController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-cliente|crear-cliente|editar-cliente|borrar-cliente', ['only' => 'index']);
-        $this->middleware('permission:ver-cliente', ['only' => 'show']);
-        $this->middleware('permission:crear-cliente', ['only' => ['create', 'store']]);
-        $this->middleware('permission:editar-cliente', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:borrar-cliente', ['only' => ['destroy']]);
+        $this->middleware('permission:ver-fotografo|crear-fotografo|editar-fotografo|borrar-fotografo', ['only' => 'index']);
+        $this->middleware('permission:ver-fotografo', ['only' => 'show']);
+        $this->middleware('permission:crear-fotografo', ['only' => ['create', 'store']]);
+        $this->middleware('permission:editar-fotografo', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:borrar-fotografo', ['only' => ['destroy']]);
     }
 
     /**
@@ -27,10 +26,10 @@ class ClienteController extends Controller
      */
     public function index(Request $request)
     {
-        $clientes = User::select('*')->orderBy('id','ASC')->where('tipo_i','=',1);
+        $fotografos = User::select('*')->orderBy('id','ASC')->where('tipo_o','=',1);
         $limit = (isset($request->limit)) ? $request->limit:10;
         if(isset($request->search)){
-            $clientes = $clientes->where('id','like','%'.$request->search.'%')
+            $fotografos = $fotografos->where('id','like','%'.$request->search.'%')
             ->orWhere('name','like','%'.$request->search.'%')
             ->orWhere('apellidos','like','%'.$request->search.'%')
             ->orWhere('email','like','%'.$request->search.'%')
@@ -38,8 +37,8 @@ class ClienteController extends Controller
             ->orWhere('sexo','like','%'.$request->search.'%')
             ->orWhere('phone','like','%'.$request->search.'%');
         }
-        $clientes = $clientes->paginate($limit)->appends($request->all());
-        return view('clientes.index', compact('clientes'));
+        $fotografos = $fotografos->paginate($limit)->appends($request->all());
+        return view('fotografos.index', compact('fotografos'));
     }
 
     /**
@@ -49,7 +48,7 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        return view('clientes.create');
+        return view('fotografos.create');
     }
 
     /**
@@ -61,7 +60,7 @@ class ClienteController extends Controller
     public function store(StoreUserRequest $request)
     {
         User::create($request->validated());
-        return redirect()->route('clientes.index')->with('message', 'cliente Agregado Con Éxito');
+        return redirect()->route('fotografos.index')->with('message', 'fotografo Agregado Con Éxito');
     }
 
     /**
@@ -72,8 +71,8 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-        $cliente = User::where('id', '=', $id)->firstOrFail();
-        return view('clientes.show', compact('cliente'));
+        $fotografo = User::where('id', '=', $id)->firstOrFail();
+        return view('fotografos.show', compact('fotografo'));
     }
 
     /**
@@ -84,8 +83,8 @@ class ClienteController extends Controller
      */
     public function edit($id)
     {
-        $cliente = User::where('id', '=', $id)->firstOrFail();
-        return view('clientes.edit', compact('cliente'));
+        $fotografo = User::where('id', '=', $id)->firstOrFail();
+        return view('fotografos.edit', compact('fotografo'));
     }
 
     /**
@@ -97,9 +96,9 @@ class ClienteController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        $cliente = User::find($id);
-        $cliente->update($request->validated());
-        return redirect()->route('clientes.index')->with('message', 'Se ha actualizado los datos correctamente.');
+        $fotografo = User::find($id);
+        $fotografo->update($request->validated());
+        return redirect()->route('fotografos.index')->with('message', 'Se ha actualizado los datos correctamente.');
     }
 
     /**
@@ -110,12 +109,12 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
-        $cliente = User::findOrFail($id);
+        $fotografo = User::findOrFail($id);
         try{
-            $cliente->delete();
-            return redirect()->route('clientes.index')->with('message', 'Se han borrado los datos correctamente.');
+            $fotografo->delete();
+            return redirect()->route('fotografos.index')->with('message', 'Se han borrado los datos correctamente.');
         }catch(QueryException $e){
-            return redirect()->route('clientes.index')->with('danger', 'Datos relacionados, imposible borrar dato.');
+            return redirect()->route('fotografos.index')->with('danger', 'Datos relacionados, imposible borrar dato.');
         }
     }
 }

@@ -4,7 +4,7 @@
         <div class="form-floating">
             <input type="password" placeholder="password" class="form-control" name="password"
                 value="">
-            <label>Contraseña</label>
+            <label>Nueva Contraseña</label>
         </div>
     </div>
     <div class="col-12">

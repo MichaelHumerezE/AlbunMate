@@ -8,12 +8,27 @@ use App\Http\Requests\UpdateFotoRequest;
 use App\Models\Evento;
 use App\Models\FotografoEvento;
 use App\Models\TipoEvento;
+use Aws\Rekognition\RekognitionClient;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class FotoController extends Controller
 {
+    protected $rekognition;
+
+    public function __construct()
+    {
+        $this->rekognition = new RekognitionClient([
+            'version' => 'latest',
+            'region' => env('AWS_DEFAULT_REGION'),
+            'credentials' => [
+                'key' => env('AWS_ACCESS_KEY_ID'),
+                'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            ],
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -69,6 +84,17 @@ class FotoController extends Controller
             $path = $request->file('image')->store('eventos/' . $evento->carpeta, 's3');
             $foto->image = $path;
             $foto->save();
+            $this->rekognition->indexFaces([
+                'CollectionId' => $evento->carpeta,
+                'DetectionAttributes' => ['ALL'],
+                'ExternalImageId' => strval($foto->id),
+                'Image' => [
+                    'S3Object' => [
+                        'Bucket' => env('AWS_BUCKET'),
+                        'Name' => $foto->image,
+                    ],
+                ],
+            ]);
         }
         return redirect()->route('fotos.fotos', $evento->id)->with('message', 'Foto Agregado Con Éxito');
     }

@@ -10,6 +10,7 @@ class Suscripcion extends Model
     use HasFactory;
 
     protected $fillable = [
+        'fechaPago',
         'fechaIni',
         'fechaFin',
         'monto',

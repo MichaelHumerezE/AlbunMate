@@ -2,7 +2,7 @@
 @section('content')
     <div class="card mt-3">
         <div class="card-header d-inline-flex">
-            <h1>Pagos</h1>
+            <h1>SUSCRIPCIONES</h1>
         </div>
         <div class="card-body">
             <div class="row">
@@ -68,7 +68,7 @@
                                 <th scope="row">{{ $valor++ }}</th>
                                 <td>{{ $pago->plan }}</td>
                                 <td>${{ $pago->monto }}</td>
-                                <td>{{ $pago->fechaIni }}</td>
+                                <td>{{ $pago->fechaPago }}</td>
                                 <td>{{ $pago->fechaIni }}</td>
                                 <td>{{ $pago->fechaFin }}</td>
                                 <td>{{ $pago->name }}</td>

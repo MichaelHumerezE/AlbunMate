@@ -1,16 +1,8 @@
 <nav class="navbar navbar-expand-md navbar-light text-white shadow-sm" id="headerSidebar">
     <div class="container-fluid">
-        @guest
-            <a class="navbar-brand text-white" href="/home">Servicio De Internet</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        @else
-            <a class="navbar-brand text-white" class="nav-link" id="sidebarCollapse">
-                <i class="fas fa-align-left"></i>
-            </a>
-        @endguest
+        <a class="navbar-brand text-white" class="nav-link" id="sidebarCollapse">
+            <i class="fas fa-align-left"></i>
+        </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
@@ -25,7 +17,8 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ route('perfil.edit', auth()->user()->id) }}">Configurar
                                     Perfil</a></li>
-                            <li><a class="dropdown-item" href="{{ route('password.edit', auth()->user()->id) }}">Cambiar contraseña</a></li>
+                            <li><a class="dropdown-item" href="{{ route('password.edit', auth()->user()->id) }}">Cambiar
+                                    contraseña</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

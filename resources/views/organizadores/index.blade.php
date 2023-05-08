@@ -2,7 +2,7 @@
 @section('content')
     <div class="card mt-3">
         <div class="card-header d-inline-flex">
-            <h1>PERSONAL</h1>
+                <h1>ORGANIZADORES</h1>
         </div>
         <div class="card-body">
             <div class="row">
@@ -39,14 +39,14 @@
                     </div>
                 </div>
                 <div class="col-1">
-                    @can('crear-empleado')
-                        <a href="{{ route('empleados.create') }}" class="btn btn-primary ml-auto">
+                    @can('crear-organizador')
+                        <a href="{{ route('organizadores.create') }}" class="btn btn-primary ml-auto">
                             <i class="fas fa-plus"></i>
                             Agregar</a>
                     @endcan
                 </div>
-                @if ($empleados->total() > 10)
-                    {{ $empleados->links() }}
+                @if ($organizadores->total() > 10)
+                    {{ $organizadores->links() }}
                 @endif
             </div>
             <div class="table-responsive">
@@ -61,7 +61,6 @@
                             <th>Sexo</th>
                             <th>Phone</th>
                             <th>Suscripcion</th>
-                            <th>Rol</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -73,44 +72,37 @@
                         }
                         //$valor = 1;
                         ?>
-                        @foreach ($empleados as $empleado)
+                        @foreach ($organizadores as $organizador)
                             <tr>
                                 <th scope="row">{{ $valor++ }}</th>
-                                <td>{{ $empleado->name }}</td>
-                                <td>{{ $empleado->apellidos }}</td>
-                                <td>{{ $empleado->email }}</td>
-                                <td>{{ $empleado->ci }}</td>
-                                <td>{{ $empleado->sexo }}</td>
-                                <td>{{ $empleado->phone }}</td>
-                                @if ($empleado->suscripcion == 1)
+                                <td>{{ $organizador->name }}</td>
+                                <td>{{ $organizador->apellidos }}</td>
+                                <td>{{ $organizador->email }}</td>
+                                <td>{{ $organizador->ci }}</td>
+                                <td>{{ $organizador->sexo }}</td>
+                                <td>{{ $organizador->phone }}</td>
+                                @if ($organizador->suscripcion == 1)
                                     <td>Si</td>
                                 @else
                                     <td>No</td>
                                 @endif
                                 <td>
-                                    @if (!empty($empleado->getRoleNames()))
-                                        @foreach ($empleado->getRoleNames() as $rolname)
-                                            <span>{{ $rolname }}</span>
-                                        @endforeach
-                                    @endif
-                                </td>
-                                <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        @can('ver-empleado')
-                                            <a href="{{ route('empleados.show', $empleado->id) }}" class="btn btn-info"><i
-                                                    class="fas fa-eye"></i></a>
+                                        @can('ver-organizador')
+                                            <a href="{{ route('organizadores.show', $organizador->id) }}"
+                                                class="btn btn-info"><i class="fas fa-eye"></i></a>
                                         @endcan
-                                        @can('editar-empleado')
-                                            <a href="{{ route('empleados.edit', $empleado->id) }}" class="btn btn-primary"><i
-                                                    class="fas fa-pencil-alt"></i></a>
+                                        @can('editar-organizador')
+                                            <a href="{{ route('organizadores.edit', $organizador->id) }}"
+                                                class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
                                         @endcan
-                                        @can('borrar-empleado')
-                                            <button type="submit" class="btn btn-danger" form="delete_{{ $empleado->id }}"
+                                        @can('borrar-organizador')
+                                            <button type="submit" class="btn btn-danger" form="delete_{{ $organizador->id }}"
                                                 onclick="return confirm('¿Estás seguro de eliminar el registro?')">
                                                 <i class="fas fa-trash"></i>
                                             </button>
-                                            <form action="{{ route('empleados.destroy', $empleado->id) }}"
-                                                id="delete_{{ $empleado->id }}" method="POST" enctype="multipart/form-data"
+                                            <form action="{{ route('organizadores.destroy', $organizador->id) }}"
+                                                id="delete_{{ $organizador->id }}" method="POST" enctype="multipart/form-data"
                                                 hidden>
                                                 @csrf
                                                 @method('DELETE')
@@ -125,21 +117,22 @@
             </div>
         </div>
         <div class="card-footer">
-            @if ($empleados->total() > 10)
-                {{ $empleados->links() }}
+            @if ($organizadores->total() > 10)
+                {{ $organizadores->links() }}
             @endif
         </div>
     </div>
     <!-- JS PARA FILTAR Y BUSCAR MEDIANTE PAGINADO -->
     <Script type="text/javascript">
         $('#limit').on('change', function() {
-            window.location.href = "{{ route('empleados.index') }}?limit=" + $(this).val() + '&search=' + $(
+            window.location.href = "{{ route('organizadores.index') }}?limit=" + $(this).val() + '&search=' + $(
                 '#search').val()
         })
 
         $('#search').on('keyup', function(e) {
             if (e.keyCode == 13) {
-                window.location.href = "{{ route('empleados.index') }}?limit=" + $('#limit').val() + '&search=' +
+                window.location.href = "{{ route('organizadores.index') }}?limit=" + $('#limit').val() +
+                    '&search=' +
                     $(this).val()
             }
         })

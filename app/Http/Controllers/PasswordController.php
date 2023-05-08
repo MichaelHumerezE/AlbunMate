@@ -18,12 +18,12 @@ class PasswordController extends Controller
         if (auth()->user()) {
             $tipo_i = auth()->user()->tipo_i;
             if ($tipo_i == 1) {
-                return view('inicio')->with('message', 'Se ha actualizado los datos correctamente.');
+                return view('inicio');
             } else {
-                return view('home.index')->with('message', 'Se ha actualizado los datos correctamente.');
+                return view('home.index');
             }
         }
-        return view('inicio')->with('message', 'Se ha actualizado los datos correctamente.');
+        return view('inicio');
     }
 
     /**
@@ -67,7 +67,14 @@ class PasswordController extends Controller
     public function edit($id)
     {
         $perfil = User::where('id', '=', $id)->firstOrFail();
-        return view('perfil.editPass', compact('perfil'));
+        if (auth()->user()) {
+            $tipo_i = auth()->user()->tipo_i;
+            if ($tipo_i == 1) {
+                return view('perfil.editPassInv', compact('perfil'));
+            } else {
+                return view('perfil.editPass', compact('perfil'));
+            }
+        }
     }
 
     /**
@@ -81,7 +88,7 @@ class PasswordController extends Controller
     {
         $perfil = User::find($id);
         $perfil->update($request->validated());
-        return redirect()->route('password.index')->with('message', 'Se ha actualizado los datos correctamente.');
+        return redirect()->route('password.index')->with('message', 'Se ha actualizado los datos correctamente.')->with('success', 'Se ha actualizado los datos correctamente.');
     }
 
     /**

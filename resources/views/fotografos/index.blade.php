@@ -2,7 +2,7 @@
 @section('content')
     <div class="card mt-3">
         <div class="card-header d-inline-flex">
-            <h1>PERSONAL</h1>
+                <h1>FOTÓGRAFOS</h1>
         </div>
         <div class="card-body">
             <div class="row">
@@ -39,14 +39,14 @@
                     </div>
                 </div>
                 <div class="col-1">
-                    @can('crear-empleado')
-                        <a href="{{ route('empleados.create') }}" class="btn btn-primary ml-auto">
+                    @can('crear-fotografo')
+                        <a href="{{ route('fotografos.create') }}" class="btn btn-primary ml-auto">
                             <i class="fas fa-plus"></i>
                             Agregar</a>
                     @endcan
                 </div>
-                @if ($empleados->total() > 10)
-                    {{ $empleados->links() }}
+                @if ($fotografos->total() > 10)
+                    {{ $fotografos->links() }}
                 @endif
             </div>
             <div class="table-responsive">
@@ -61,7 +61,6 @@
                             <th>Sexo</th>
                             <th>Phone</th>
                             <th>Suscripcion</th>
-                            <th>Rol</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -73,44 +72,37 @@
                         }
                         //$valor = 1;
                         ?>
-                        @foreach ($empleados as $empleado)
+                        @foreach ($fotografos as $fotografo)
                             <tr>
                                 <th scope="row">{{ $valor++ }}</th>
-                                <td>{{ $empleado->name }}</td>
-                                <td>{{ $empleado->apellidos }}</td>
-                                <td>{{ $empleado->email }}</td>
-                                <td>{{ $empleado->ci }}</td>
-                                <td>{{ $empleado->sexo }}</td>
-                                <td>{{ $empleado->phone }}</td>
-                                @if ($empleado->suscripcion == 1)
+                                <td>{{ $fotografo->name }}</td>
+                                <td>{{ $fotografo->apellidos }}</td>
+                                <td>{{ $fotografo->email }}</td>
+                                <td>{{ $fotografo->ci }}</td>
+                                <td>{{ $fotografo->sexo }}</td>
+                                <td>{{ $fotografo->phone }}</td>
+                                @if ($fotografo->suscripcion == 1)
                                     <td>Si</td>
                                 @else
                                     <td>No</td>
                                 @endif
                                 <td>
-                                    @if (!empty($empleado->getRoleNames()))
-                                        @foreach ($empleado->getRoleNames() as $rolname)
-                                            <span>{{ $rolname }}</span>
-                                        @endforeach
-                                    @endif
-                                </td>
-                                <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        @can('ver-empleado')
-                                            <a href="{{ route('empleados.show', $empleado->id) }}" class="btn btn-info"><i
-                                                    class="fas fa-eye"></i></a>
+                                        @can('ver-fotografo')
+                                            <a href="{{ route('fotografos.show', $fotografo->id) }}"
+                                                class="btn btn-info"><i class="fas fa-eye"></i></a>
                                         @endcan
-                                        @can('editar-empleado')
-                                            <a href="{{ route('empleados.edit', $empleado->id) }}" class="btn btn-primary"><i
-                                                    class="fas fa-pencil-alt"></i></a>
+                                        @can('editar-fotografo')
+                                            <a href="{{ route('fotografos.edit', $fotografo->id) }}"
+                                                class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
                                         @endcan
-                                        @can('borrar-empleado')
-                                            <button type="submit" class="btn btn-danger" form="delete_{{ $empleado->id }}"
+                                        @can('borrar-fotografo')
+                                            <button type="submit" class="btn btn-danger" form="delete_{{ $fotografo->id }}"
                                                 onclick="return confirm('¿Estás seguro de eliminar el registro?')">
                                                 <i class="fas fa-trash"></i>
                                             </button>
-                                            <form action="{{ route('empleados.destroy', $empleado->id) }}"
-                                                id="delete_{{ $empleado->id }}" method="POST" enctype="multipart/form-data"
+                                            <form action="{{ route('fotografos.destroy', $fotografo->id) }}"
+                                                id="delete_{{ $fotografo->id }}" method="POST" enctype="multipart/form-data"
                                                 hidden>
                                                 @csrf
                                                 @method('DELETE')
@@ -125,21 +117,22 @@
             </div>
         </div>
         <div class="card-footer">
-            @if ($empleados->total() > 10)
-                {{ $empleados->links() }}
+            @if ($fotografos->total() > 10)
+                {{ $fotografos->links() }}
             @endif
         </div>
     </div>
     <!-- JS PARA FILTAR Y BUSCAR MEDIANTE PAGINADO -->
     <Script type="text/javascript">
         $('#limit').on('change', function() {
-            window.location.href = "{{ route('empleados.index') }}?limit=" + $(this).val() + '&search=' + $(
+            window.location.href = "{{ route('fotografos.index') }}?limit=" + $(this).val() + '&search=' + $(
                 '#search').val()
         })
 
         $('#search').on('keyup', function(e) {
             if (e.keyCode == 13) {
-                window.location.href = "{{ route('empleados.index') }}?limit=" + $('#limit').val() + '&search=' +
+                window.location.href = "{{ route('fotografos.index') }}?limit=" + $('#limit').val() +
+                    '&search=' +
                     $(this).val()
             }
         })

@@ -8,7 +8,7 @@
     <meta name="author" content="" />
     <title>Albumate</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/icon.png" />
+    <link rel="icon" type="image/x-icon" href="{{ url('assets/icon.png') }}" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -23,8 +23,8 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
         <div class="container">
-            <a class="brand" href="/home"><img class="brand-logo-dark" src="assets/icon.png" alt=""
-                    width="40px" height="40px" /></a>
+            <a class="brand" href="/home"><img class="brand-logo-dark" src="{{ url('assets/icon.png') }}"
+                    alt="" width="40px" height="40px" /></a>
             <a class="navbar-brand" href="/home"> Albunmate</a>
             <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button"
                 data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
@@ -44,22 +44,29 @@
                         <li class="nav-item mx-0 mx-lg-1">
                             <a href="{{ url('/pagos') }}" class="nav-link py-3 px-0 px-lg-3 rounded">Pagos</a>
                         </li>
-                        <li class="nav-item mx-0 mx-lg-1">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ auth()->user()->name }}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item"
-                                        href="{{ route('perfil.edit', auth()->user()->id) }}">Configurar Perfil</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ route('perfil.edit', auth()->user()->id) }}">Configurar Perfil</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ route('perfil.faceView', auth()->user()->id) }}">Imagen de Perfil</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ route('password.edit', auth()->user()->id) }}">Cambiar Password</a>
+                                </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li><a class="dropdown-item" href="/logout">Logout</a></li>
                             </ul>
-                        </li>
                         </li>
                     @else
                         <li class="nav-item mx-0 mx-lg-1">
@@ -69,11 +76,15 @@
                             <a href="{{ url('/register') }}" class="nav-link py-3 px-0 px-lg-3 rounded">Register</a>
                         </li>
                     @endauth
+                    <li class="nav-item mx-0 mx-lg-5">
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
+
     @yield('content')
+
     <!-- Footer-->
     <footer class="footer text-center">
         <div class="container">

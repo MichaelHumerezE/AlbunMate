@@ -52,52 +52,32 @@
             <label>E-Mail</label>
         </div>
     </div>
-    @if ((isset($perfil->id) ? $perfil->id : '') == '')
-        <div class="col-12">
-            <div class="form-floating">
-                <input type="password" placeholder="password" class="form-control" name="password"
-                    value="{{ isset($perfil) ? $perfil->password : old('password') }}">
-                <label>Contraseña</label>
-            </div>
+    <div class="col-12">
+        <div class="form-floating">
+            <input type="text" placeholder="domicilio" class="form-control" name="domicilio"
+                value="{{ isset($perfil) ? $perfil->domicilio : old('domicilio') }}">
+            <label>Domicilio</label>
         </div>
-        <div class="col-12">
-            <div class="form-floating">
-                <input type="password" placeholder="password_confirmation" class="form-control"
-                    name="password_confirmation" value="{{ isset($perfil) ? $perfil->password : old('password') }}">
-                <label>Confirmar Contraseña</label>
-            </div>
+    </div>
+    <div class="col-12">
+        <h5>Suscripcion</h5>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="suscripcion" id="flexRadioDefault1" value="0"
+                disabled @if ((isset($perfil) ? $perfil->suscripcion : old('suscripcion')) == '0') checked @endif>
+            <label class="form-check-label" for="flexRadioDefault1">
+                Inactivo
+            </label>
         </div>
-    @endif
-    @if ($perfil->tipoc == 1)
-        <input type="hidden" name="tipoc" class="form-control" id="exampleInputPassword1" value="1">
-        <input type="hidden" name="tipoe" class="form-control" id="exampleInputPassword1" value="0">
-    @else
-        <div class="col-12">
-            <div class="form-floating">
-                <input type="text" placeholder="domicilio" class="form-control" name="domicilio"
-                    value="{{ isset($perfil) ? $perfil->domicilio : old('domicilio') }}">
-                <label>Domicilio</label>
-            </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="suscripcion" id="flexRadioDefault1" value="1"
+                disabled @if ((isset($perfil) ? $perfil->suscripcion : old('suscripcion')) == '1') checked @endif>
+            <label class="form-check-label" for="flexRadioDefault1">
+                Activo
+            </label>
         </div>
-        <div class="col-12">
-            <h5>Estado</h5>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="estado" id="flexRadioDefault1" value="0"
-                    @if ((isset($perfil) ? $perfil->estado : old('estado')) == '0') checked @endif>
-                <label class="form-check-label" for="flexRadioDefault1">
-                    Inactivo
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="estado" id="flexRadioDefault1" value="1"
-                    @if ((isset($perfil) ? $perfil->estado : old('estado')) == '1') checked @endif>
-                <label class="form-check-label" for="flexRadioDefault1">
-                    Activo
-                </label>
-            </div>
-        </div>
-        <input type="hidden" name="tipoc" class="form-control" id="exampleInputPassword1" value="0">
-        <input type="hidden" name="tipoe" class="form-control" id="exampleInputPassword1" value="1">
-    @endif
-
+    </div>
+    <input type="hidden" name="tipo_p" class="form-control" id="exampleInputPassword1" value="{{ $perfil->tipo_p }}">
+    <input type="hidden" name="tipo_o" class="form-control" id="exampleInputPassword1" value="{{ $perfil->tipo_o }}">
+    <input type="hidden" name="tipo_f" class="form-control" id="exampleInputPassword1" value="{{ $perfil->tipo_f }}">
+    <input type="hidden" name="tipo_i" class="form-control" id="exampleInputPassword1" value="{{ $perfil->tipo_i }}">
 </div>

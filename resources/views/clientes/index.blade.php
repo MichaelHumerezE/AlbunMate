@@ -2,7 +2,7 @@
 @section('content')
     <div class="card mt-3">
         <div class="card-header d-inline-flex">
-            <h1>Clientes</h1>
+            <h1>CLIENTES</h1>
         </div>
         <div class="card-body">
             <div class="row">
@@ -31,7 +31,7 @@
                         ?>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-5">
                     <div class="form-group">
                         <a class="navbar-brand">Buscar</a>
                         <input class="form-control mr-sm-2" type="search" id="search" placeholder="Search"

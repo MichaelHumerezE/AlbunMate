@@ -105,6 +105,7 @@ class PaymentController extends Controller
             $fecha = $fecha->modify('+1 month');
             // Pago
             Suscripcion::create([
+                'fechaPago' => date('Y-m-d H:i:s'),
                 'fechaIni' => date('Y-m-d'),
                 'fechaFin' => $fecha->format('Y-m-d'),
                 'monto' => $monto,

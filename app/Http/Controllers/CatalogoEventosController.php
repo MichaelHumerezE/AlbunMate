@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Evento;
 use App\Models\Foto;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class CatalogoEventosController extends Controller
 {
@@ -49,6 +51,16 @@ class CatalogoEventosController extends Controller
         } else {
             return redirect()->route('catalogoEventos.index')->with('danger', 'Código Incorrecto');
         }
+    }
+
+    public function watermark($filename)
+    {
+        dd($filename);
+        $image = Image::make('s3://' . env('AWS_BUCKET') . '/' . $filename);
+        $watermark = Image::make(public_path('assets/icoc.png'))->opacity(50);
+        $image->insert($watermark, 'center');
+        /*dd(env('AWS_BUCKET'));
+        return env('AWS_BUCKET');*/
     }
 
     /**

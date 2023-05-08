@@ -9,15 +9,15 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 
-class ClienteController extends Controller
+class OrganizadorController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-cliente|crear-cliente|editar-cliente|borrar-cliente', ['only' => 'index']);
-        $this->middleware('permission:ver-cliente', ['only' => 'show']);
-        $this->middleware('permission:crear-cliente', ['only' => ['create', 'store']]);
-        $this->middleware('permission:editar-cliente', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:borrar-cliente', ['only' => ['destroy']]);
+        $this->middleware('permission:ver-organizador|crear-organizador|editar-organizador|borrar-organizador', ['only' => 'index']);
+        $this->middleware('permission:ver-organizador', ['only' => 'show']);
+        $this->middleware('permission:crear-organizador', ['only' => ['create', 'store']]);
+        $this->middleware('permission:editar-organizador', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:borrar-organizador', ['only' => ['destroy']]);
     }
 
     /**
@@ -27,10 +27,10 @@ class ClienteController extends Controller
      */
     public function index(Request $request)
     {
-        $clientes = User::select('*')->orderBy('id','ASC')->where('tipo_i','=',1);
+        $organizadores = User::select('*')->orderBy('id','ASC')->where('tipo_o','=',1);
         $limit = (isset($request->limit)) ? $request->limit:10;
         if(isset($request->search)){
-            $clientes = $clientes->where('id','like','%'.$request->search.'%')
+            $organizadores = $organizadores->where('id','like','%'.$request->search.'%')
             ->orWhere('name','like','%'.$request->search.'%')
             ->orWhere('apellidos','like','%'.$request->search.'%')
             ->orWhere('email','like','%'.$request->search.'%')
@@ -38,8 +38,8 @@ class ClienteController extends Controller
             ->orWhere('sexo','like','%'.$request->search.'%')
             ->orWhere('phone','like','%'.$request->search.'%');
         }
-        $clientes = $clientes->paginate($limit)->appends($request->all());
-        return view('clientes.index', compact('clientes'));
+        $organizadores = $organizadores->paginate($limit)->appends($request->all());
+        return view('organizadores.index', compact('organizadores'));
     }
 
     /**
@@ -49,7 +49,7 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        return view('clientes.create');
+        return view('organizadores.create');
     }
 
     /**
@@ -61,7 +61,7 @@ class ClienteController extends Controller
     public function store(StoreUserRequest $request)
     {
         User::create($request->validated());
-        return redirect()->route('clientes.index')->with('message', 'cliente Agregado Con Éxito');
+        return redirect()->route('organizadores.index')->with('message', 'organizador Agregado Con Éxito');
     }
 
     /**
@@ -72,8 +72,8 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-        $cliente = User::where('id', '=', $id)->firstOrFail();
-        return view('clientes.show', compact('cliente'));
+        $organizador = User::where('id', '=', $id)->firstOrFail();
+        return view('organizadores.show', compact('organizador'));
     }
 
     /**
@@ -84,8 +84,8 @@ class ClienteController extends Controller
      */
     public function edit($id)
     {
-        $cliente = User::where('id', '=', $id)->firstOrFail();
-        return view('clientes.edit', compact('cliente'));
+        $organizador = User::where('id', '=', $id)->firstOrFail();
+        return view('organizadores.edit', compact('organizador'));
     }
 
     /**
@@ -97,9 +97,9 @@ class ClienteController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        $cliente = User::find($id);
-        $cliente->update($request->validated());
-        return redirect()->route('clientes.index')->with('message', 'Se ha actualizado los datos correctamente.');
+        $organizador = User::find($id);
+        $organizador->update($request->validated());
+        return redirect()->route('organizadores.index')->with('message', 'Se ha actualizado los datos correctamente.');
     }
 
     /**
@@ -110,12 +110,12 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
-        $cliente = User::findOrFail($id);
+        $organizador = User::findOrFail($id);
         try{
-            $cliente->delete();
-            return redirect()->route('clientes.index')->with('message', 'Se han borrado los datos correctamente.');
+            $organizador->delete();
+            return redirect()->route('organizadores.index')->with('message', 'Se han borrado los datos correctamente.');
         }catch(QueryException $e){
-            return redirect()->route('clientes.index')->with('danger', 'Datos relacionados, imposible borrar dato.');
+            return redirect()->route('organizadores.index')->with('danger', 'Datos relacionados, imposible borrar dato.');
         }
     }
 }

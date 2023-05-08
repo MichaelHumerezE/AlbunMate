@@ -30,5 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EventoSeeder::class);
         $this->call(FotografoEventoSeeder::class);
         $this->call(FotoSeeder::class);
+        //$this->call(RecognitionSeeder::class);
+        $this->call(SuscripcionSeeder::class);
     }
 }

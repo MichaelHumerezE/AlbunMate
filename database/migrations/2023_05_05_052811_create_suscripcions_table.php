@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('suscripcions', function (Blueprint $table) {
             $table->id();
+            $table->dateTime('fechaPago');
             $table->date('fechaIni');
             $table->date('fechaFin');
             $table->double('monto');

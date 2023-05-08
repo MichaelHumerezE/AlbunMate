@@ -1,11 +1,11 @@
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar">
+        <nav id="sidebar" class="active">
             <div class="sidebar-header">
                 <center>
                     <h3>
                         <img class="brand-logo-dark" src="{{ url('assets/icon.png') }}" width="40px" />
-                        Albumate
+                        AlbuMate
                     </h3>
                     <strong><img class="brand-logo-dark" src="{{ url('assets/icon.png') }}" alt="" width="40px"
                             height="40px" /></a></strong>
@@ -29,13 +29,17 @@
                         </a>
                         <ul class="collapse list-unstyled" id="UserMenu">
                             <li class="{{ 'empleados' == Request::is('empleados*') ? 'active' : '' }}">
-                                <a href="{{ url('/empleados') }}"><i class="fa fa-user-tie"></i> <b>Empleados</b></a>
+                                <a href="{{ url('/empleados') }}"><i class="fa fa-user-tie"></i> <b>Personal</b></a>
+                            </li>
+                            <li class="{{ 'organizadores' == Request::is('organizadores*') ? 'active' : '' }}">
+                                <a href="{{ url('/organizadores') }}"><i class="fa fa-user-tie"></i>
+                                    <b>Organizadores</b></a>
+                            </li>
+                            <li class="{{ 'fotografos' == Request::is('fotografos*') ? 'active' : '' }}">
+                                <a href="{{ url('/fotografos') }}"><i class="fa fa-user"></i> <b>Fotógrafos</b></a>
                             </li>
                             <li class="{{ 'clientes' == Request::is('clientes*') ? 'active' : '' }}">
-                                <a href="{{ url('/clientes') }}"><i class="fa fa-user"></i> <b>Clientes</b></a>
-                            </li>
-                            <li class="{{ 'users' == Request::is('users*') ? 'active' : '' }}">
-                                <a href="{{ url('/users') }}"><i class="fa fa-users"></i> <b>Usuarios</b></a>
+                                <a href="{{ url('/clientes') }}"><i class="fa fa-users"></i> <b>Invitados</b></a>
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-clipboard"></i> <b>Bitácora</b></a>
@@ -73,25 +77,25 @@
                     </ul>
                 </li>
             -->
-                <li>
+                <li class="{{ 'eventos' == Request::is('eventos*') ? 'active' : '' }}">
                     <a href="{{ url('/eventos') }}">
                         <i class="fas fa-gift"></i>
                         <b>Eventos</b>
                     </a>
                 </li>
-                <li>
+                <li class="{{ 'tiposEventos' == Request::is('tiposEventos*') ? 'active' : '' }}">
                     <a href="{{ url('/tiposEventos') }}">
                         <i class="fas fa-stroopwafel"></i>
                         <b>Tipos De Eventos</b>
                     </a>
                 </li>
-                <li>
+                <li class="{{ 'fotos' == Request::is('fotos*') ? 'active' : '' }}">
                     <a href="{{ url('/fotos') }}">
                         <i class="fas fa-images"></i>
                         <b>Eventos - Fotos</b>
                     </a>
                 </li>
-                <li>
+                <li class="{{ 'suscripciones' == Request::is('suscripciones*') ? 'active' : '' }}">
                     <a href="{{ route('suscripciones.index') }}">
                         <i class="fas fa-star"></i>
                         <b>Suscripciones</b>

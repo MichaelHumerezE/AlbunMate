@@ -2,7 +2,7 @@
 @section('content')
     <div class="card mt-3">
         <div class="card-header d-inline-flex">
-            <h1>Fotos</h1>
+            <h1>FOTOS</h1>
         </div>
         <div class="card-body">
             <div class="row">

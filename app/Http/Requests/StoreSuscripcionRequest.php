@@ -24,6 +24,7 @@ class StoreSuscripcionRequest extends FormRequest
     public function rules()
     {
         return [
+            'fechaPago' => ['required'],
             'fechaIni' => ['required'],
             'fechaFin' => ['required'],
             'monto' => ['required'],

@@ -16,8 +16,9 @@ class InvitadoSeeder extends Seeder
     public function run()
     {
         $invitado = User::create([
-            'name' => 'Humberto',
-            'apellidos' => 'Lazo Mansilla',
+            'name' => 'Hans',
+            'apellidos' => '',
+            'face' => 'perfiles/h@gmail.com/1007066.jpg',
             'email' => 'h@gmail.com',
             'password' => '123456',
             'ci' => '9866028',
@@ -31,8 +32,9 @@ class InvitadoSeeder extends Seeder
         ]);
 
         $invitadp = User::create([
-            'name' => 'José Miguel',
+            'name' => 'Jack',
             'apellidos' => '',
+            'face' => 'perfiles/j@gmail.com/14660577.jpg',
             'email' => 'j@gmail.com',
             'password' => '123456',
             'ci' => '9866029',
@@ -46,12 +48,13 @@ class InvitadoSeeder extends Seeder
         ]);
 
         $invitado = User::create([
-            'name' => 'Luis Emilio',
+            'name' => 'Lilian',
             'apellidos' => '',
+            'face' => 'perfiles/l@gmail.com/8106692.jpg',
             'email' => 'l@gmail.com',
             'password' => '123456',
             'ci' => '9864174',
-            'sexo' => 'M',
+            'sexo' => 'F',
             'phone' => '60521400',
             'suscripcion' => '1',
             'tipo_p' => '0',
@@ -61,8 +64,9 @@ class InvitadoSeeder extends Seeder
         ]);
 
         $invitado = User::create([
-            'name' => 'Martha',
+            'name' => 'Margot',
             'apellidos' => '',
+            'face' => 'perfiles/m@gmail.com/1139320.jpg',
             'email' => 'm@gmail.com',
             'password' => '123456',
             'ci' => '9864175',

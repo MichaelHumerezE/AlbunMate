@@ -79,7 +79,7 @@
                                             <th scope="row">{{ $valor++ }}</th>
                                             <td>{{ $pago->plan }}</td>
                                             <td>${{ $pago->monto }}</td>
-                                            <td>{{ $pago->fechaIni }}</td>
+                                            <td>{{ $pago->fechaPago }}</td>
                                             <td>{{ $pago->fechaIni }}</td>
                                             <td>{{ $pago->fechaFin }}</td>
                                         </tr>
