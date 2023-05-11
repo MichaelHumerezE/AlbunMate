@@ -42,7 +42,7 @@
                             </div>
                         </div>
                     @endforeach
-                    @if (isset($fotosEnc))
+                    @if ($fotosEnc->all() == [])
                         <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Ninguna Imagen
                             Econtrada
                         </h2>

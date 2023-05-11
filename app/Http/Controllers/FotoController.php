@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Foto;
 use App\Http\Requests\StoreFotoRequest;
 use App\Http\Requests\UpdateFotoRequest;
+use App\Mail\notificacion;
 use App\Models\Evento;
 use App\Models\FotografoEvento;
 use App\Models\TipoEvento;
+use App\Models\User;
 use Aws\Rekognition\RekognitionClient;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class FotoController extends Controller
@@ -95,6 +98,39 @@ class FotoController extends Controller
                     ],
                 ],
             ]);
+            // Enviar notificaciones a los usuarios en donde aparezca en la foto
+            $clientes = User::where('tipo_i', 1)->get();
+            foreach ($clientes as $cliente) {
+                if ($cliente->face <> null) {
+                    $profileImageKey = $foto->image;
+                    $collectionId = strval($cliente->id);
+                    $threshold = 75.0;
+                    $profileImage = [
+                        'S3Object' => [
+                            'Bucket' => env('AWS_BUCKET'),
+                            'Name' => $profileImageKey,
+                        ],
+                    ];
+
+                    $results = $this->rekognition->searchFacesByImage([
+                        'CollectionId' => $collectionId,
+                        'FaceMatchThreshold' => $threshold,
+                        'Image' => $profileImage,
+                        'MaxFaces' => 1000,
+                    ]);
+
+                    $similarImages = collect($results['FaceMatches'])->map(function ($match) {
+                        return [
+                            'similarity' => $match['Similarity'],
+                            'key' => $match['Face']['ExternalImageId'],
+                        ];
+                    });
+                    if($similarImages->all() <> []){
+                        //dd($similarImages->all());
+                        Mail::to($cliente->email)->send(new notificacion($foto, $cliente->id));
+                    }
+                }
+            }
         }
         return redirect()->route('fotos.fotos', $evento->id)->with('message', 'Foto Agregado Con Éxito');
     }

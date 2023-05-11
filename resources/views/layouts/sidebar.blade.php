@@ -101,6 +101,11 @@
                         <b>Suscripciones</b>
                     </a>
                 </li>
+                <li class="{{ 'descargas' == Request::is('descargas*') ? 'active' : '' }}">
+                    <a href="{{ route('descargas.index') }}">
+                        <i class="fas fa-download"></i>
+                        <b>Descargas</b>
+                    </a>
                 </li>
                 <!--
                 <li>

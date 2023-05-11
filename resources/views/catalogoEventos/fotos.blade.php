@@ -45,6 +45,9 @@
                                 </a>
                                 <img class="img-fluid" src="{{ asset(Storage::disk('s3')->url($foto->image)) }}"
                                     alt="..." width="400" />
+                                <!--
+                                <img class="img-fluid" src="{{ route('watermark.imagen', basename(Storage::disk('s3')->url($foto->image))) }}"
+                                    alt="..." width="400" />-->
                             </div>
                         </div>
                     @endforeach

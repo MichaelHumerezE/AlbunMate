@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CatalogoEventosController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\DescargaController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\FotoController;
@@ -21,6 +22,8 @@ use App\Http\Controllers\RolController;
 use App\Http\Controllers\SuscripcionController;
 use App\Http\Controllers\TipoEventoController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,11 +75,13 @@ Route::group(['middleware' => ['auth']], function () {
     route::get('/pagos', [SuscripcionController::class, 'pagosUsers'])->name('pagos.index');
 });
 
+Route::resource('/descargas', DescargaController::class);
+
 Route::resource('/catalogoEventos', CatalogoEventosController::class);
 
 Route::get('/UserPlanes', [SuscripcionController::class, 'planUser'])->name('suscripciones.planUser');
 
-Route::get('/watermark/{filename}', [CatalogoEventosController::class, 'watermark'])->where('filename', '(.*)')->name('watermark');
+Route::get('/watermark/{filename}', [CatalogoEventosController::class, 'watermark'])->name('watermark.imagen');
 
 /*Route::get('/compare-faces/{profileImageKey}/{collectionId}/{threshold}', function ($profileImageKey, $collectionId, $threshold) {
     $similarImages = app('App\Http\Controllers\RecognitionController')->compareFaces($profileImageKey, $collectionId, $threshold);
@@ -84,3 +89,16 @@ Route::get('/watermark/{filename}', [CatalogoEventosController::class, 'watermar
 });*/
 
 Route::post('/compare-faces', [RecognitionController::class, 'compareFaces'])->name('recognition.compareFaces');
+
+/*Route::get('/watermark-image', function () {
+    $s3 = Storage::disk('s3');
+    $imagePath = 'eventos/Cumpleano_Infantil/8101649.jpg';
+    $image = $s3->get($imagePath);
+
+    // Agregar marca de agua
+    $img = Image::make($image);
+    $img->insert('assets/icon.png', 'bottom-right', 10, 10);
+
+    // Mostrar la imagen con marca de agua
+    return $img->response();
+});*/

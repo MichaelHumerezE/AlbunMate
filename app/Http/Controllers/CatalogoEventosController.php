@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Descarga;
 use App\Models\Evento;
 use App\Models\Foto;
 use App\Models\User;
@@ -53,16 +54,6 @@ class CatalogoEventosController extends Controller
         }
     }
 
-    public function watermark($filename)
-    {
-        dd($filename);
-        $image = Image::make('s3://' . env('AWS_BUCKET') . '/' . $filename);
-        $watermark = Image::make(public_path('assets/icoc.png'))->opacity(50);
-        $image->insert($watermark, 'center');
-        /*dd(env('AWS_BUCKET'));
-        return env('AWS_BUCKET');*/
-    }
-
     /**
      * Display the specified resource.
      *
@@ -77,6 +68,14 @@ class CatalogoEventosController extends Controller
         $foto = Foto::where('id', $id)->firstOrFail();
         if (auth()->check()) {
             if (auth()->user()->suscripcion == 1) {
+                Descarga::create([
+                    'fecha' => date('Y-m-d'),
+                    'hora' => date('H:i:s'),
+                    'id_fotografo' => $foto->id_fotografo,
+                    'id_invitado' => auth()->user()->id,
+                    'id_foto' => $foto->id,
+                    'id_evento' => $foto->id_evento,
+                ]);
                 return Storage::disk('s3')->download($foto->image);
             } else {
                 return redirect()->route('catalogoEventos.index')->with('danger', 'Perfil sin suscripción. Elija un nuevo plan de suscripción.');
@@ -95,6 +94,20 @@ class CatalogoEventosController extends Controller
     public function edit($id)
     {
         //
+    }
+
+    public function watermark($filename)
+    {
+        dd($filename);
+        $s3 = Storage::disk('s3');
+        $image = $s3->get($filename);
+
+        // Agregar marca de agua
+        $img = Image::make($image);
+        $img->insert('assets/icon.png', 'bottom-right', 10, 10);
+
+        // Devolver la imagen con marca de agua como archivo
+        return $img->response();
     }
 
     /**

@@ -29,7 +29,17 @@
                             @csrf
                             <div class="row">
                                 @if (isset($perfil->face))
-                                    <img src="{{ asset(Storage::disk('s3')->url($perfil->face)) }}" alt="..." width="100">
+                                    <div class="row justify-content-center">
+                                        <!-- Portfolio Item 1-->
+                                        <div class="col-md-6 col-lg-4 mb-5">
+                                            <div class="portfolio-item mx-auto" data-bs-toggle="modal"
+                                                data-bs-target="#portfolioModal10">
+                                                <img class="img-fluid"
+                                                    src="{{ asset(Storage::disk('s3')->url($perfil->face)) }}"
+                                                    alt="..." width="400" />
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endif
                                 <div class="col-12">
                                     <div class="form-floating">

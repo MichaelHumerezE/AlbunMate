@@ -6,7 +6,7 @@
         <!-- Portfolio Section-->
         <section class="page-section portfolio" id="portfolio">
             <div class="container">
-                @include('components.flash_alerts')
+                @include('layouts.partials.messages')
                 <!-- Portfolio Section Heading-->
                 <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Planes</h2>
                 <!-- Icon Divider-->
@@ -110,6 +110,7 @@
                             </div>
                             <center>
                                 <p> <b> Suscripción por 30 días </b> </p>
+                                <p> <b> [Cantidad de 10 fotos] </b> </p>
                             </center>
                             <div class="card-footer">
                                 <center>

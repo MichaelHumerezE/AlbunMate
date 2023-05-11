@@ -32,10 +32,10 @@ class InvitadoSeeder extends Seeder
         ]);
 
         $invitadp = User::create([
-            'name' => 'Jack',
-            'apellidos' => '',
-            'face' => 'perfiles/j@gmail.com/14660577.jpg',
-            'email' => 'j@gmail.com',
+            'name' => 'Michael',
+            'apellidos' => 'Humerez',
+            'face' => 'perfiles/m79832142l@gmail.com/14660577.jpg',
+            'email' => 'm79832142l@gmail.com',
             'password' => '123456',
             'ci' => '9866029',
             'sexo' => 'M',

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Evento;
 use App\Models\Foto;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Aws\Rekognition\RekognitionClient;
@@ -30,12 +31,12 @@ class RecognitionSeeder extends Seeder
 
         // Especificar el nombre del bucket de S3 y el nombre del archivo de la imagen
         $bucket = env('AWS_BUCKET');
-        
+
         $eventos = Evento::get();
         foreach ($eventos as $evento) {
-            /*$result = $rekognition->deleteCollection([
+            $result = $rekognition->deleteCollection([
                 'CollectionId' => $evento->carpeta,
-            ]);*/
+            ]);
             $result = $rekognition->createCollection([
                 'CollectionId' => $evento->carpeta,
             ]);
@@ -61,6 +62,37 @@ class RecognitionSeeder extends Seeder
 
                 // Mostrar el resultado de la función indexFaces
                 //dd($result);
+            }
+        }
+        //print('User');
+        $invitados = User::where('tipo_i', 1)->get();
+        foreach ($invitados as $invitado) {
+            if(isset($invitado->face)){
+                //print('Coleccion');
+                $result = $rekognition->deleteCollection([
+                    'CollectionId' => strval($invitado->id),
+                ]);
+                $result = $rekognition->createCollection([
+                    'CollectionId' => strval($invitado->id),
+                ]);
+                //print('Creado');
+                $filename = $invitado->face;
+
+                // Especificar el nombre de la colección de Amazon Rekognition
+                $collectionName = strval($invitado->id);
+
+                // Llamar a la función indexFaces para registrar la imagen en la colección
+                $result = $rekognition->indexFaces([
+                    'CollectionId' => $collectionName,
+                    'DetectionAttributes' => ['ALL'],
+                    'ExternalImageId' => strval($invitado->id),
+                    'Image' => [
+                        'S3Object' => [
+                            'Bucket' => $bucket,
+                            'Name' => $filename,
+                        ],
+                    ],
+                ]);
             }
         }
     }

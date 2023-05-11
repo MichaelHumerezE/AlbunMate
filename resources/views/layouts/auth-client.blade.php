@@ -17,6 +17,9 @@
         type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+    </script>
 </head>
 
 <body id="page-top">
@@ -43,6 +46,9 @@
                     @auth
                         <li class="nav-item mx-0 mx-lg-1">
                             <a href="{{ url('/pagos') }}" class="nav-link py-3 px-0 px-lg-3 rounded">Pagos</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a href="{{ route('descargas.show', auth()->user()->id) }}" class="nav-link py-3 px-0 px-lg-3 rounded">Descargas</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#" role="button"
